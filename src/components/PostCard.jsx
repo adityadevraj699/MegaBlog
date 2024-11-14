@@ -1,8 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react'
 import appwriteService from "../appwrite/config"
 import {Link} from 'react-router-dom'
-import PropTypes from 'prop-types';
 
 function PostCard({$id, title, featuredImage}) {
     
@@ -22,10 +20,5 @@ function PostCard({$id, title, featuredImage}) {
   )
 }
 
-PostCard.propTypes = {
-  $id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  featuredImage: PropTypes.string.isRequired,
-};
 
 export default PostCard

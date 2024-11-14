@@ -1,16 +1,29 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react'
-import PropTypes from 'prop-types';
+import React from 'react';
+import LogoImage from '../assets/MegaBlog.jpg';
 
-function Logo({width = '100px'}) {
+function Logo({ width = '500px' }) {
   return (
-    <div style={{ width }}>Logo</div>
-  )
+    <div
+      className="relative"
+      style={{
+        width,
+        height: 'auto',
+       
+      }}
+    >
+      <img
+      
+        className="rounded-lg "
+        src={LogoImage} 
+        alt="Logo"
+        style={{
+          width,
+          
+          
+        }}
+      />
+    </div>
+  );
 }
 
-//add by me
-Logo.propTypes = {
-  width: PropTypes.string
-};
-
-export default Logo
+export default Logo;

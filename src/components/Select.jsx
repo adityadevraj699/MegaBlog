@@ -1,5 +1,4 @@
 import React, {useId} from 'react'
-import PropTypes from 'prop-types'
 
 function Select({
     options,
@@ -25,11 +24,6 @@ function Select({
         </select>
     </div>
   )
-}
-Select.propTypes = {
-    options: PropTypes.arrayOf(PropTypes.string).isRequired,
-    label: PropTypes.string,
-    className: PropTypes.string,
 }
 
 export default React.forwardRef(Select)
