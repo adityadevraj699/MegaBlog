@@ -27,7 +27,7 @@ function Home() {
     }
 
     return (
-        <div className="w-full py-16 bg-gray-50">
+        <div className="w-full py-16  min-h-screen bg-gray-50">
             <Container>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {posts.map((post) => (

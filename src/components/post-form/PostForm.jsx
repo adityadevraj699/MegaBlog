@@ -45,7 +45,7 @@ export default function PostForm({ post }) {
                 try {
                     const dbPost = await appwriteService.updatePost(post.$id, {
                         ...data,
-                        featuredImage: file ? file.$id : post.featuredImage,
+                        featuredImage: file ? file.$id : post.featuredImage, // Check for file and assign ID
                     });
                     console.log("Updated post:", dbPost);
 
@@ -57,7 +57,7 @@ export default function PostForm({ post }) {
                 }
             } else {
                 if (file) {
-                    data.featuredImage = file.$id;
+                    data.featuredImage = file.$id; // Ensure file is valid before assigning $id
 
                     try {
                         const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
@@ -68,6 +68,15 @@ export default function PostForm({ post }) {
                         }
                     } catch (createError) {
                         console.error("Post creation error:", createError);
+                    }
+                } else {
+                    // Handle case where there is no file uploaded (e.g., user didn't upload an image)
+                    console.log("No file uploaded, proceeding without featured image.");
+                    const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                    console.log("Created post:", dbPost);
+
+                    if (dbPost) {
+                        navigate(`/post/${dbPost.$id}`);
                     }
                 }
             }
@@ -97,7 +106,10 @@ export default function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-lg shadow-lg">
+        <form
+            onSubmit={handleSubmit(submit)}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-lg shadow-lg"
+        >
             {/* Left Column (Title, Slug, Content) */}
             <div className="space-y-6">
                 <div>

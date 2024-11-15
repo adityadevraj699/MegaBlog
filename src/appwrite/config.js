@@ -1,5 +1,6 @@
 import conf from '../conf/conf.js';
 import { Client, ID, Databases, Storage, Query } from "appwrite";
+import authService from '../appwrite/auth'; // Adjust the path as necessary
 
 export class Service{
     client = new Client();
@@ -15,7 +16,7 @@ export class Service{
     }
 
     async createPost({title, slug, content, featuredImage, status, userId}){
-        console.log("title",title,"slug", slug, "content",content,"image", featuredImage,"status", status,"userid", userId)
+       // console.log("..............................title",title,"slug", slug, "content",content,"image", featuredImage,"status", status,"userid", userId)
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -101,24 +102,27 @@ export class Service{
 
     // file upload service
 
-    async uploadFile(file){
+    async uploadFile(file) {
+        
 
         try {
-            //console.log("file : ",file)
-           // console.log("bucket : ",conf.appwriteBucketId)
-           // console.log(this.bucket)
+            //console.log('Uploading file:', file);
+    
+            // Ensure you are authenticated before this call
             const buc = await this.bucket.createFile(
-                conf.appwriteBucketId,
-                ID.unique(),
-                file
-            )
-            //console.log("buc", buc)
+                conf.appwriteBucketId,  // Ensure this ID is correct
+                ID.unique(),            // Unique ID for the file
+                file                    // File object
+            );
+    
+            //console.log('File uploaded successfully:', buc);
             return buc;
         } catch (error) {
-            console.log("Appwrite serive :: uploadFile :: error", error);
-            return false
+            console.error('Appwrite service :: uploadFile :: error', error.message, error.code);
+            return false;
         }
     }
+    
 
     async deleteFile(fileId){
         try {
@@ -134,10 +138,12 @@ export class Service{
     }
 
     getFilePreview(fileId){
-        return this.bucket.getFilePreview(
+        const filePer = this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId
         )
+       // console.log("fileper",filePer)
+        return filePer
     }
 }
 
